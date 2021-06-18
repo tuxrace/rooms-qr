@@ -1,8 +1,8 @@
 # Book a room app
 
-Shows the room availability given the input data and time
+Simple single page mobile application designed to allow users in our office to check for room availability.
 
-![]('./screen.png')
+![screen](./screen.png "Screen")
 
 ## To install
 - npm install
