@@ -2,18 +2,13 @@ import React from 'react';
 import {View} from 'react-native';
 import {Text} from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import styles from './styles';
 
 const DateSelect = props => {
   const {onChange, value} = props
   return (
     <View
-      style={{
-        padding: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        display: 'flex',
-      }}>
+      style={styles.container}>
       <View style={{marginRight: 24}}>
         <Text>Date</Text>
       </View>
