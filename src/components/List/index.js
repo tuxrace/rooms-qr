@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
 import axios from 'axios';
 import strings from '../../strings';
 
@@ -17,7 +17,6 @@ const List = props => {
         },
       },
     );
-    // console.log(resData);
     setData(resData);
   };
 
@@ -27,12 +26,10 @@ const List = props => {
 
 
   const getAvailability = (availability, timeVal) => {
-    console.log('test', timeVal, availability)
     const time = new Date(timeVal)
     const hour = ('0' + time.getHours().toString()).slice(-2)
     const min = ('0' + time.getMinutes().toString()).slice(-2)
     const timeStr = `${hour}:${min}`
-    console.log('bool', timeStr, availability[timeStr] === '1');
     return availability[timeStr] === '1';
   }
 
@@ -59,11 +56,24 @@ const List = props => {
     );
   };
 
+  const handleSort = () => {
+    
+    const sorted = data.sort((a, b) => {
+      return parseFloat(a.capacity) - parseFloat(b.capacity)
+    })
+    console.log('sort', sorted)
+    setData(sorted)
+  }
+
   return (
     <View>
-      <Text style={{padding: 8}}>{strings.rooms}</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={{padding: 8}}>{strings.rooms}</Text>
+        <Button icon="sort" onPress={handleSort} />
+      </View>
       <FlatList
         data={data}
+        extraData={data}
         renderItem={renderItem}
         keyExtractor={item => item.name}
       />
