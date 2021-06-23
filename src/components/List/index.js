@@ -8,6 +8,8 @@ import {ROOMS_URL} from '../../config';
 const List = props => {
   const {date, time} = props;
   const [data, setData] = useState([]);
+  const [sortAsc, setSortAsc] = useState(false);
+
   const getData = async () => {
     const {data: resData} = await axios.get(ROOMS_URL, {
       headers: {
@@ -54,11 +56,7 @@ const List = props => {
   };
 
   const handleSort = () => {
-    const sorted = data.sort((a, b) => {
-      return parseFloat(a.capacity) - parseFloat(b.capacity);
-    });
-    console.log('sort', sorted);
-    setData(sorted);
+    setSortAsc(!sortAsc)
   };
 
   return (
@@ -68,8 +66,12 @@ const List = props => {
         <Button icon="sort" onPress={handleSort} />
       </View>
       <FlatList
-        data={data}
-        extraData={data}
+        data={data.sort((a, b) => {
+          if (sortAsc) {
+            return parseFloat(a.capacity) - parseFloat(b.capacity);
+          }
+          return parseFloat(b.capacity) - parseFloat(a.capacity);
+        })}
         renderItem={renderItem}
         keyExtractor={item => item.name}
       />
